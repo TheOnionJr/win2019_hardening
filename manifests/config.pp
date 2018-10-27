@@ -15,6 +15,7 @@ class win2019_hardening::config {
   	}
   	dsc_registry {'EnableMulticast':
   		dsc_ensure 		=> 'Present',
+  		dsc_key			=> 'HKEY_LOCAL_MACHINE\NETWORK\DNS_Client'
   		dsc_valuename   => 'EnableMulticast',
   		dsc_valuedata 	=> '1',
   		dsc_valuetype 	=> 'Dword',
