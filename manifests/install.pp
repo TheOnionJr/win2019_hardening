@@ -5,6 +5,10 @@
 # @example
 #   include win2019_hardening::install
 class win2019_hardening::install {
+	$win_sw_pkg = lookup('base_windows::win_sw_pkg')
+
+  	include chocolatey
+  	
 	case $::operatingsystem {
     	'windows':
       	{ Package { provider => chocolatey, } }
