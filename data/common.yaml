@@ -1,0 +1,3 @@
+base_windows::win_sw_pkg:
+  - 'notepadplusplus'
+  - 'git'
