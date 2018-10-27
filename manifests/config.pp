@@ -19,4 +19,10 @@ class win2019_hardening::config {
   		dsc_valuedata 	=> '1',
   		dsc_valuetype 	=> 'Dword',
   	}
+	#Adding NodeType to NetBT registry, to avoid NBT-NS (Netbios) poisioning.
+	registry_value { 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\NodeType' :
+		ensure  => present,
+		type	=> dword,
+		data    => 2,
+	}
 }
