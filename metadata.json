@@ -6,7 +6,9 @@
   "license": "Apache-2.0",
   "source": "",
   "dependencies": [
-
+	{ "name": "puppetlabs/registry", "version_requirement": ">=2.1.0" },
+	{ "name": "ayohrling/local_security_policy", "version_requirement": ">=0.6.3" },
+	{ "name": "puppetlabs/dsc", "version_requirement": ">=1.7.0" }
   ],
   "operatingsystem_support": [
     {
