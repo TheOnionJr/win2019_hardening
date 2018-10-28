@@ -9,14 +9,16 @@ class win2019_hardening::config {
     	dsc_timezone         => 'W. Europe Standard Time',
     	dsc_issingleinstance => 'yes',
   	}
+	#Eternal blue prevention:
 	dsc_windowsfeature {'FS-SMB1':
 		dsc_ensure => 'absent',
     	dsc_name   => 'FS-SMB1',
   	}
-  	dsc_registry {'NetbiosOptions':
-  		dsc_ensure 		=> 'Present',
-  		dsc_key			=> 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces\Tcpip_{e3f726bc-8f9f-4c26-8ef4-166b150949cc}',
-  		dsc_valuename   => 'NetbiosOptions',
+  	#Netbios poisoning prevention:
+  	dsc_registry {'NodeType':
+  		dsc_ensure 		=> 'present',
+  		dsc_key			=> 'Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters',
+  		dsc_valuename   => 'NodeType',
   		dsc_valuedata 	=> '2',
   		dsc_valuetype 	=> 'Dword',
   	}
