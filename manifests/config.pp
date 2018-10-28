@@ -13,11 +13,11 @@ class win2019_hardening::config {
 		dsc_ensure => 'absent',
     	dsc_name   => 'FS-SMB1',
   	}
-  	dsc_registry {'EnableMulticast':
+  	dsc_registry {'NetbiosOptions':
   		dsc_ensure 		=> 'Present',
-  		dsc_key			=> 'HKEY_LOCAL_MACHINE\NETWORK\DNS_Client'
-  		dsc_valuename   => 'EnableMulticast',
-  		dsc_valuedata 	=> '1',
+  		dsc_key			=> 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces\Tcpip_{e3f726bc-8f9f-4c26-8ef4-166b150949cc}',
+  		dsc_valuename   => 'NetbiosOptions',
+  		dsc_valuedata 	=> '2',
   		dsc_valuetype 	=> 'Dword',
   	}
 	#Adding NodeType to NetBT registry, to avoid NBT-NS (Netbios) poisioning.
