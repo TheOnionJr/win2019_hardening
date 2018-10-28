@@ -26,4 +26,11 @@ class win2019_hardening::config {
 		type	=> dword,
 		data    => 2,
 	}
+	#Denying outgoing NTLM traffic to remote servers. To avoid hash dumping.
+	local_security_policy { 'Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers':
+		ensure         => 'present',
+		policy_setting => 'MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\RestrictSendingNTLMTraffic',
+		policy_type    => 'Registry Values',
+		policy_value   => '2',
+	}
 }

@@ -22,6 +22,10 @@ Briefly tell users why they might want to use your module. Explain what your mod
 
 This should be a fairly short description helps the user decide if your module is what they want.
 
+This module is for Windows server (2019) security hardening.
+
+	The module...
+
 ## Setup
 
 ### What win2019_hardening affects **OPTIONAL**
@@ -39,6 +43,10 @@ If there's more that they should know about, though, this is the place to mentio
 If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
 
 If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
+
+This module has a few dependencies:
+	Registry editor for windows: https://forge.puppet.com/puppetlabs/registry 
+	Security policy editor for windows: https://forge.puppet.com/ayohrling/local_security_policy 
 
 ### Beginning with win2019_hardening
 
