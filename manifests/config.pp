@@ -9,18 +9,16 @@ class win2019_hardening::config {
     	dsc_timezone         => 'W. Europe Standard Time',
     	dsc_issingleinstance => 'yes',
   	}
-	#Eternal blue prevention:
+  	#Eternal blue prevention:
 	dsc_windowsfeature {'FS-SMB1':
 		dsc_ensure => 'absent',
     	dsc_name   => 'FS-SMB1',
   	}
   	#Netbios poisoning prevention:
-  	dsc_registry {'NodeType':
-  		dsc_ensure 		=> 'present',
-  		dsc_key			=> 'Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters',
-  		dsc_valuename   => 'NodeType',
-  		dsc_valuedata 	=> '2',
-  		dsc_valuetype 	=> 'Dword',
+  	registry_value {'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters':
+  		ensure 	=> present,
+  		type 	=> dword,
+  		data 	=> 2,
   	}
 	#Adding NodeType to NetBT registry, to avoid NBT-NS (Netbios) poisioning.
 	registry_value { 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\NodeType' :
