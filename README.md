@@ -46,8 +46,10 @@ If your most recent release breaks compatibility or requires particular steps fo
 
 This module has a few dependencies:
 	Registry editor for windows: https://forge.puppet.com/puppetlabs/registry 
+	Tool for rebooting the machine: https://forge.puppet.com/puppetlabs/reboot
 	Security policy editor for windows: https://forge.puppet.com/ayohrling/local_security_policy 
 	PowerShell Desired State Configurator: https://forge.puppet.com/puppetlabs/dsc
+	
 
 ### Beginning with win2019_hardening
 
