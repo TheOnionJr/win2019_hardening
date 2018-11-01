@@ -15,15 +15,4 @@ class win2019_hardening::install {
     	default:
     	{ Package { provider => windows, } }
 	}
-	package { $win_sw_pkg:
-    	ensure => 'latest',
-  	}
-  	dsc_xtimezone { 'Oslo':
-    	dsc_timezone         => 'W. Europe Standard Time',
-    	dsc_issingleinstance => 'yes',
-  	}
-	dsc_windowsfeature {'FS-SMB1':
-		dsc_ensure => 'absent',
-    	dsc_name   => 'FS-SMB1',
-  	}
 }
