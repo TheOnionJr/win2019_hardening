@@ -28,6 +28,9 @@ This module is for Windows server (2019) security hardening.
 
 ## Setup
 
+To choose if the computer can shut off while a user is logged in or not, change the boolean (Boolean $no_auto_reboot_with_logged_on_users = true) in manifests/init.pp. 
+True (it can not reboot with users logged in) is default, change to false to allow reboots while a user is logged on. 
+
 ### What win2019_hardening affects **OPTIONAL**
 
 If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.

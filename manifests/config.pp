@@ -28,6 +28,51 @@ class win2019_hardening::config {
 		data    => 2,
 #		notify  => Reboot['after_run'],
 	}
+		#Ensuring automatic windows updates:
+	registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\NoAutoUpdate' :
+		ensure => present,
+		type   => dword,
+		data   => 0,
+#		notify => Reboot['after_run'],
+	}
+	#Ensuring Automatic updates are set to "Auto download and notify on install"
+	registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\AUOptions' :
+		ensure => present,
+		type   => dword,
+		data   => 3,
+#		notify => Reboot['after_run'],
+	}
+	#Setting update-install time to friday afternoon (to allow for weekend-fix and max uptime in reg. work-hours)
+		#Update-day set to friday.
+	registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\ScheduledInstallDay' :
+		ensure => present,
+		type   => dword,
+		data   => 6,
+#		notify => Reboot['after_run'],
+	}
+		#Update-hour set to 17.
+	registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\ScheduledInstallTime' :
+		ensure => present,
+		type   => dword,
+		data   => 17,
+#		notify => Reboot['after_run'],
+	}
+	#Setting if computer will reboot while a user is logged in (Auto-update), based on config (default true).
+	if($win2019_hardening::no_auto_reboot_with_logged_on_users) {
+		registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\NoAutoRebootWithLoggedOnUsers' :
+			ensure => present,
+			type   => dword,
+			data   => 1,
+#			notify => Reboot['after_run'],
+		}
+	} else {
+		registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\NoAutoRebootWithLoggedOnUsers' :
+			ensure => present,
+			type   => dword,
+			data   => 0,
+#			notify => Reboot['after_run'],
+		}
+	}
 	#Denying outgoing NTLM traffic to remote servers. To avoid hash dumping.
 	local_security_policy { 'Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers':
 		ensure         => 'present',
