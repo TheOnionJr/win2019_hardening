@@ -1,7 +1,7 @@
 base_windows::win_sw_pkg:
   - 'notepadplusplus'
   - 'git'
-config::blacklist_in:
+win2019_hardening::blacklist_in:
   - 21: 'TCP'
   - 22: 'TCP'
   - 23: 'TCP'
@@ -18,7 +18,7 @@ config::blacklist_in:
   - 445: 'TCP'
   - 1433: 'TCP'
   - 1433: 'UDP'
-config::blacklist_out:
+win2019_hardening::blacklist_out:
   - 21: 'TCP'
   - 22: 'TCP'
   - 23: 'TCP'
@@ -35,9 +35,9 @@ config::blacklist_out:
   - 445: 'TCP'
   - 1433: 'TCP'
   - 1433: 'UDP'
-config::whitelist_in:
+win2019_hardening::whitelist_in:
   - 3389: 'TCP'
   - 3389: 'UDP'
-config::whitelist_out:
+win2019_hardening::whitelist_out:
   - 3389: 'TCP'
   - 3389: 'UDP'

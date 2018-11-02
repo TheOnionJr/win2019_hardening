@@ -80,12 +80,11 @@ class win2019_hardening::config {
 		policy_type    => 'Registry Values',
 		policy_value   => '2',
 	}
-	
+
 	class { 'windows_firewall': ensure => 'stopped' }
 	#Blacklisting ports:
-	$blacklist_in = lookup('config::blacklist_in')
 
-	$blacklist_in.each |$port, $protocol| {
+	$win2019_hardening::blacklist_in.each |$port, $protocol| {
 		windows_firewall::exception { 'Blacklist_in':
 		ensure      => present,
 		direction   => 'in',
@@ -97,9 +96,7 @@ class win2019_hardening::config {
 		}
 	}
 
-	$blacklist_in = lookup('config::blacklist_out')
-
-	$blacklist_in.each |$port, $protocol| {
+	$win2019_hardening::blacklist_out.each |$port, $protocol| {
 		windows_firewall::exception { 'Blacklist_out':
 		ensure      => present,
 		direction   => 'out',
@@ -112,9 +109,7 @@ class win2019_hardening::config {
 	}
 
 	#Whitelisting ports:
-	$whitelist_in = lookup('config::whitelist_in')
-
-	$whitelist_in.each |$port, $protocol| {
+	$win2019_hardening::whitelist_in.each |$port, $protocol| {
 		windows_firewall::exception { 'whitelist_in':
 		ensure      => present,
 		direction   => 'in',
@@ -126,9 +121,7 @@ class win2019_hardening::config {
 		}
 	}
 
-	$whitelist_out = lookup('config::whitelist_out')
-
-	$whitelist_out.each |$port, $protocol| {
+	$win2019_hardening::whitelist_out.each |$port, $protocol| {
 		windows_firewall::exception { 'whitelist_out':
 			ensure 	    => present,
 			direction   => 'out',
