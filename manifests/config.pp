@@ -86,120 +86,64 @@ class win2019_hardening::config {
 		policy_value   => '2',
 	}
 
-
-	/*
-	class { 'windows_firewall': ensure => 'stopped' }
 	#Blacklisting ports:
-	#exec { '${port}_blacklist_in_tcp':
-	#	command => 'New-NetFirewallRule -DisplayName "${port}_blacklist_in_tcp" -Direction Outbound -LocalPort $port -Protocol TCP -Action Block',
-	#	provider => powershell,
-	#}
-
-	
 	$win2019_hardening::blacklist_in.each |$port| {
-		windows_firewall::exception { "${port}_blacklist_in_tcp":
-			ensure       => present,
-			direction    => 'in',
-			action       => 'block',
-			enabled      => true,
-			protocol     => 'TCP',
-			local_port   => $port,
-			remote_port  => 'any',
-			display_name => "${port}_blacklist_in_tcp_desc",
+	exec { "${port}_blacklist_in_tcp":
+		command => "New-NetFirewallRule -DisplayName \"${port}_blacklist_in_tcp\" -Direction Inbound -LocalPort ${port} -Protocol TCP -Action Block -Enabled true",
+		provider => powershell,
+		returns => 0,
 		}
 	}
-
 	$win2019_hardening::blacklist_in.each |$port| {
-		windows_firewall::exception { "${port}_blacklist_in_udp":
-			ensure       => present,
-		    direction    => 'in',
-		    action       => 'block',
-		    enabled      => true,
-		    protocol     => 'UDP',
-		    local_port   => $port,
-		    remote_port  => 'any',
-		    display_name => "${port}_blacklist_in_udp_desc",
+		exec { "${port}_blacklist_in_udp":
+			command => "New-NetFirewallRule -DisplayName \"${port}_blacklist_in_udp\" -Direction Inbound -LocalPort ${port} -Protocol UDP -Action Block -Enabled true",
+			provider => powershell,
+			returns => 0,
 		}
 	}
-
 	$win2019_hardening::blacklist_out.each |$port| {
-		windows_firewall::exception { "${port}_blacklist_out_tcp":
-		    ensure       => present,
-		    direction    => 'out',
-		    action       => 'block',
-		    enabled      => true,
-		    protocol     => 'TCP',
-		    local_port   => $port,
-		    remote_port  => 'any',
-		    display_name => "${port}_blacklist_out_tcp_desc",
+		exec { "${port}_blacklist_out_tcp":
+			command => "New-NetFirewallRule -DisplayName \"${port}_blacklist_out_tcp\" -Direction Outbound -LocalPort ${port} -Protocol TCP -Action Block -Enabled true",
+			provider => powershell,
+			returns => 0,
 		}
 	}
-
 	$win2019_hardening::blacklist_out.each |$port| {
-		windows_firewall::exception { "${port}_blacklist_out_udp":
-		    ensure       => present,
-			direction    => 'out',
-			action       => 'block',
-			enabled      => true,
-			protocol     => 'UDP',
-			local_port   => $port,
-			remote_port  => 'any',
-			display_name => "${port}_blacklist_out_udp_desc",
+		exec { "${port}_blacklist_out_udp":
+			command => "New-NetFirewallRule -DisplayName \"${port}_blacklist_out_udp\" -Direction Outbound -LocalPort ${port} -Protocol UDP -Action Block -Enabled true",
+			provider => powershell,
+			returns => 0,
 		}
 	}
-
-	#Whitelisting ports:
+	#Whitelisting porsts:
 	$win2019_hardening::whitelist_in.each |$port| {
-		windows_firewall::exception { "${port}_whitelist_in_tcp":
-			ensure       => present,
-			direction    => 'in',
-			action       => 'allow',
-			enabled      => true,
-			protocol     => 'TCP',
-			local_port   => $port,
-			remote_port  => 'any',
-			display_name => "${port}_whitelist_in_tcp_desc",
+		exec { "${port}_whitelist_in_tcp":
+			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\" -Direction Inbound -LocalPort ${port} -Protocol TCP -Action Allow -Enabled true",
+			provider => powershell,
+			returns => 0,
 		}
 	}
-
 	$win2019_hardening::whitelist_in.each |$port| {
-		windows_firewall::exception { "${port}_whitelist_in_udp":
-			ensure       => present,
-			direction    => 'in',
-			action       => 'allow',
-			enabled      => true,
-			protocol     => 'UDP',
-			local_port   => $port,
-			remote_port  => 'any',
-			display_name => "${port}_whitelist_in_udp_desc",
+		exec { "${port}_whitelist_in_udp":
+			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\" -Direction Inbound -LocalPort ${port} -Protocol UDP -Action Allow -Enabled true",
+			provider => powershell,
+			returns => 0,
 		}
 	}
-
 	$win2019_hardening::whitelist_out.each |$port| {
-		windows_firewall::exception { "${port}_whitelist_out_tcp":
-			ensure 	     => present,
-			direction    => 'out',
-			action       => 'allow',
-			enabled      => true,
-			protocol     => 'TCP',
-			local_port   => $port,
-			remote_port  => 'any',
-			display_name => "${port}_whitelist_out_tcp_desc",
+		exec { "${port}_whitelist_out_tcp":
+			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\" -Direction Outbound -LocalPort ${port} -Protocol TCP -Action Allow -Enabled true",
+			provider => powershell,
+			returns => 0,
 		}
 	}
-
 	$win2019_hardening::whitelist_out.each |$port| {
-		windows_firewall::exception { "${port}_whitelist_out_udp":
-			ensure 	     => present,
-			direction    => 'out',
-			action       => 'allow',
-			enabled      => true,
-			protocol     => 'UDP',
-			local_port   => $port,
-			remote_port  => 'any',
-			display_name => "${port}_whitelist_out_udp_desc",
+		exec { "${port}_whitelist_out_udp":
+			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\" -Direction Outbound -LocalPort ${port} -Protocol UDP -Action Allow -Enabled true",
+			provider => powershell,
+			returns => 0,
 		}
-	}*/
+	}
 	#Setting auditing policy to Microsoft's "Stronger Recommendation"
 	auditpol { 'Credential Validation':
 		success => 'enable',
