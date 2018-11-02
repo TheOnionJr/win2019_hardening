@@ -48,12 +48,13 @@ If your module requires anything extra before setting up (pluginsync enabled, an
 If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
 
 This module has a few dependencies:
-*	Registry editor for windows: https://forge.puppet.com/puppetlabs/registry 
-*	Tool for rebooting the machine: https://forge.puppet.com/puppetlabs/reboot
-*	Security policy editor for windows: https://forge.puppet.com/ayohrling/local_security_policy 
-*	PowerShell Desired State Configurator: https://forge.puppet.com/puppetlabs/dsc
-*	Firewall rules editor: https://forge.puppet.com/puppet/windows_firewall/readme
-*	Windows audit policies manager: https://forge.puppet.com/jonono/auditpol
+
+ *	Registry editor for windows: https://forge.puppet.com/puppetlabs/registry 
+ *	Tool for rebooting the machine: https://forge.puppet.com/puppetlabs/reboot
+ *	Security policy editor for windows: https://forge.puppet.com/ayohrling/local_security_policy 
+ *	PowerShell Desired State Configurator: https://forge.puppet.com/puppetlabs/dsc
+ *	Firewall rules editor: https://forge.puppet.com/puppet/windows_firewall/readme
+ *	Windows audit policies manager: https://forge.puppet.com/jonono/auditpol
 	
 
 ### Beginning with win2019_hardening
