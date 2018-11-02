@@ -200,6 +200,90 @@ class win2019_hardening::config {
 			display_name => "${port}_whitelist_out_udp_desc",
 		}
 	}*/
+	#Setting auditing policy to Microsoft's "Stronger Recommendation"
+	auditpol { 'Credential Validation':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Kerberos Authentication Service':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Kerberos Service Ticket Operations':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Other Account Logon Events':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Computer Account Management':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Other Account Management Events':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Security Group Management':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'User Account Management':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Process Creation':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Account Lockout':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Logoff':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Logon':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Other Logon/Logoff Events':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Special Logon':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Audit Policy Change':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Authentication Policy Change':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'MPSSVC Rule-Level Policy Change':
+		success => 'enable',
+	}
+	auditpol { 'IPsec Driver':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Security State Change':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'Security System Extension':
+		success => 'enable',
+		failure => 'enable',
+	}
+	auditpol { 'System Integrity':
+		success => 'enable',
+		failure => 'enable',
+	}
 	
 }
 #Temporary code
