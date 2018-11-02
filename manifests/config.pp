@@ -74,64 +74,128 @@ class win2019_hardening::config {
 		}
 	}
 	#Denying outgoing NTLM traffic to remote servers. To avoid hash dumping.
-	local_security_policy { 'Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers':
+	/*local_security_policy { 'Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers':
 		ensure         => 'present',
 		policy_setting => 'MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\RestrictSendingNTLMTraffic',
 		policy_type    => 'Registry Values',
 		policy_value   => '2',
-	}
+	}*/
 
+
+	/*
 	class { 'windows_firewall': ensure => 'stopped' }
 	#Blacklisting ports:
+	#exec { '${port}_blacklist_in_tcp':
+	#	command => 'New-NetFirewallRule -DisplayName "${port}_blacklist_in_tcp" -Direction Outbound -LocalPort $port -Protocol TCP -Action Block',
+	#	provider => powershell,
+	#}
 
-	$win2019_hardening::blacklist_in.each |$port, $protocol| {
-		windows_firewall::exception { 'Blacklist_in':
-		ensure      => present,
-		direction   => 'in',
-		action      => 'block',
-		enabled     => true,
-		protocol    => $protocol,
-		local_port  => $port,
-		remote_port => 'any',
+	
+	$win2019_hardening::blacklist_in.each |$port| {
+		windows_firewall::exception { "${port}_blacklist_in_tcp":
+			ensure       => present,
+			direction    => 'in',
+			action       => 'block',
+			enabled      => true,
+			protocol     => 'TCP',
+			local_port   => $port,
+			remote_port  => 'any',
+			display_name => "${port}_blacklist_in_tcp_desc",
 		}
 	}
 
-	$win2019_hardening::blacklist_out.each |$port, $protocol| {
-		windows_firewall::exception { 'Blacklist_out':
-		ensure      => present,
-		direction   => 'out',
-		action      => 'block',
-		enabled     => true,
-		protocol    => $protocol,
-		local_port  => $port,
-		remote_port => 'any',
+	$win2019_hardening::blacklist_in.each |$port| {
+		windows_firewall::exception { "${port}_blacklist_in_udp":
+			ensure       => present,
+		    direction    => 'in',
+		    action       => 'block',
+		    enabled      => true,
+		    protocol     => 'UDP',
+		    local_port   => $port,
+		    remote_port  => 'any',
+		    display_name => "${port}_blacklist_in_udp_desc",
+		}
+	}
+
+	$win2019_hardening::blacklist_out.each |$port| {
+		windows_firewall::exception { "${port}_blacklist_out_tcp":
+		    ensure       => present,
+		    direction    => 'out',
+		    action       => 'block',
+		    enabled      => true,
+		    protocol     => 'TCP',
+		    local_port   => $port,
+		    remote_port  => 'any',
+		    display_name => "${port}_blacklist_out_tcp_desc",
+		}
+	}
+
+	$win2019_hardening::blacklist_out.each |$port| {
+		windows_firewall::exception { "${port}_blacklist_out_udp":
+		    ensure       => present,
+			direction    => 'out',
+			action       => 'block',
+			enabled      => true,
+			protocol     => 'UDP',
+			local_port   => $port,
+			remote_port  => 'any',
+			display_name => "${port}_blacklist_out_udp_desc",
 		}
 	}
 
 	#Whitelisting ports:
-	$win2019_hardening::whitelist_in.each |$port, $protocol| {
-		windows_firewall::exception { 'whitelist_in':
-		ensure      => present,
-		direction   => 'in',
-		action      => 'allow',
-		enabled     => true,
-		protocol    => $protocol,
-		local_port  => $port,
-		remote_port => 'any',
+	$win2019_hardening::whitelist_in.each |$port| {
+		windows_firewall::exception { "${port}_whitelist_in_tcp":
+			ensure       => present,
+			direction    => 'in',
+			action       => 'allow',
+			enabled      => true,
+			protocol     => 'TCP',
+			local_port   => $port,
+			remote_port  => 'any',
+			display_name => "${port}_whitelist_in_tcp_desc",
 		}
 	}
 
-	$win2019_hardening::whitelist_out.each |$port, $protocol| {
-		windows_firewall::exception { 'whitelist_out':
-			ensure 	    => present,
-			direction   => 'out',
-			action      => 'allow',
-			enabled     => true,
-			protocol    => $protocol,
-			local_port  => $port,
-			remote_port => 'any',
+	$win2019_hardening::whitelist_in.each |$port| {
+		windows_firewall::exception { "${port}_whitelist_in_udp":
+			ensure       => present,
+			direction    => 'in',
+			action       => 'allow',
+			enabled      => true,
+			protocol     => 'UDP',
+			local_port   => $port,
+			remote_port  => 'any',
+			display_name => "${port}_whitelist_in_udp_desc",
 		}
 	}
+
+	$win2019_hardening::whitelist_out.each |$port| {
+		windows_firewall::exception { "${port}_whitelist_out_tcp":
+			ensure 	     => present,
+			direction    => 'out',
+			action       => 'allow',
+			enabled      => true,
+			protocol     => 'TCP',
+			local_port   => $port,
+			remote_port  => 'any',
+			display_name => "${port}_whitelist_out_tcp_desc",
+		}
+	}
+
+	$win2019_hardening::whitelist_out.each |$port| {
+		windows_firewall::exception { "${port}_whitelist_out_udp":
+			ensure 	     => present,
+			direction    => 'out',
+			action       => 'allow',
+			enabled      => true,
+			protocol     => 'UDP',
+			local_port   => $port,
+			remote_port  => 'any',
+			display_name => "${port}_whitelist_out_udp_desc",
+		}
+	}*/
+	
 }
 #Temporary code
 #class tempForReboot {
