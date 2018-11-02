@@ -35,6 +35,64 @@ class win2019_hardening::config {
 		policy_type    => 'Registry Values',
 		policy_value   => '2',
 	}
+
+	#Blacklisting ports:
+	$blacklist_in = lookup('config::blacklist_in')
+
+	$blacklist_in.each |Integer $port, String $protocol| {
+		windows_firewall::exception { 'Blacklist_in'
+		ensure      => present,
+		direction   => 'in',
+		action      => 'block',
+		enabled     => true,
+		protocol    => ${protocol},
+		local_port  => ${port},
+		remote_port => 'any',
+		}
+	}
+
+	$blacklist_in = lookup('config::blacklist_out')
+
+	$blacklist_in.each |Integer $port, String $protocol| {
+		windows_firewall::exception { 'Blacklist_out'
+		ensure      => present,
+		direction   => 'out',
+		action      => 'block',
+		enabled     => true,
+		protocol    => ${protocol},
+		local_port  => ${port},
+		remote_port => 'any',
+		}
+	}
+
+	#Whitelisting ports:
+	$whitelist_in = lookup('config::whitelist_in')
+
+	$whitelist_in.each |Integer $port, String $protocol| {
+		windows_firewall::exception { 'whitelist_in'
+		ensure      => present,
+		direction   => 'in',
+		action      => 'allow',
+		enabled     => true,
+		protocol    => ${protocol},
+		local_port  => ${port},
+		remote_port => 'any',
+		}
+	}
+
+	$whitelist_out = lookup('config::whitelist_out')
+
+	$whitelist_out.each |Integer $port, String $protocol| {
+		windows_firewall::exception { 'whitelist_out'
+			ensure 	    => present,
+			direction   => 'out',
+			action      => 'allow',
+			enabled     => true,
+			protocol    => ${protocol},
+			local_port  => ${port},
+			remote_port => 'any',
+		}
+	}
 }
 #Temporary code
 #class tempForReboot {
