@@ -71,6 +71,7 @@ class win2019_hardening::config {
     data   => 2,
     notify => Reboot['after_run'],
   }
+
   #Blacklisting ports:
   $win2019_hardening::blacklist_in.each |$port| {
     exec { "${port}_blacklist_in_tcp":
