@@ -19,28 +19,28 @@ class win2019_hardening::config {
   		ensure 	=> present,
   		type 	=> dword,
   		data 	=> 2,
-#		notify  => Reboot['after_run'],
+		notify  => Reboot['after_run'],
   	}
 	#Adding NodeType to NetBT registry, to avoid NBT-NS (Netbios) poisioning.
 	registry_value { 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\NodeType' :
 		ensure  => present,
 		type	=> dword,
 		data    => 2,
-#		notify  => Reboot['after_run'],
+		notify  => Reboot['after_run'],
 	}
 		#Ensuring automatic windows updates:
 	registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\NoAutoUpdate' :
 		ensure => present,
 		type   => dword,
 		data   => 0,
-#		notify => Reboot['after_run'],
+		notify => Reboot['after_run'],
 	}
 	#Ensuring Automatic updates are set to "Auto download and notify on install"
 	registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\AUOptions' :
 		ensure => present,
 		type   => dword,
 		data   => 3,
-#		notify => Reboot['after_run'],
+		notify => Reboot['after_run'],
 	}
 	#Setting update-install time to friday afternoon (to allow for weekend-fix and max uptime in reg. work-hours)
 		#Update-day set to friday.
@@ -48,14 +48,14 @@ class win2019_hardening::config {
 		ensure => present,
 		type   => dword,
 		data   => 6,
-#		notify => Reboot['after_run'],
+		notify => Reboot['after_run'],
 	}
 		#Update-hour set to 17.
 	registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\ScheduledInstallTime' :
 		ensure => present,
 		type   => dword,
 		data   => 17,
-#		notify => Reboot['after_run'],
+		notify => Reboot['after_run'],
 	}
 	#Setting if computer will reboot while a user is logged in (Auto-update), based on config (default true).
 	if($win2019_hardening::no_auto_reboot_with_logged_on_users) {
@@ -63,14 +63,14 @@ class win2019_hardening::config {
 			ensure => present,
 			type   => dword,
 			data   => 1,
-#			notify => Reboot['after_run'],
+			notify => Reboot['after_run'],
 		}
 	} else {
 		registry_value { 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\NoAutoRebootWithLoggedOnUsers' :
 			ensure => present,
 			type   => dword,
 			data   => 0,
-#			notify => Reboot['after_run'],
+			notify => Reboot['after_run'],
 		}
 	}
 	#Denying outgoing NTLM traffic to remote servers. To avoid hash dumping.
@@ -84,6 +84,7 @@ class win2019_hardening::config {
 		policy_setting => 'MACHINE\System\CurrentControlSet\Control\Lsa\MSV1_0\RestrictSendingNTLMTraffic',
 		policy_type    => 'Registry Values',
 		policy_value   => '2',
+		require 	   => Registry_key['HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0\RestrictSendingNTLMTraffic'],
 	}
 
 	#Blacklisting ports:
@@ -242,10 +243,7 @@ class win2019_hardening::config {
 		command => 'C:/Program Files/enablemulticasts.ps1',
 		provider => powershell,
 	}	
+	reboot { 'after_run':
+		apply => finished,
+	} 
 }
-#Temporary code
-#class tempForReboot {
-#	reboot { 'after_run':
-#		apply => finished,
-#	} 
-#}
