@@ -6,12 +6,4 @@
 #   include win2019_hardening::install
 class win2019_hardening::install {
 
-  	include chocolatey
-  	
-	case $::operatingsystem {
-    	'windows':
-      	{ Package { provider => chocolatey, } }
-    	default:
-    	{ Package { provider => windows, } }
-	}
 }
