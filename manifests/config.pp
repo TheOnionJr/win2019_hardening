@@ -88,10 +88,11 @@ class win2019_hardening::config {
 
 	#Blacklisting ports:
 	$win2019_hardening::blacklist_in.each |$port| {
-	exec { "${port}_blacklist_in_tcp":
-		command => "New-NetFirewallRule -DisplayName \"${port}_blacklist_in_tcp\" -Direction Inbound -LocalPort ${port} -Protocol TCP -Action Block -Enabled true",
-		provider => powershell,
-		returns => 0,
+		exec { "${port}_blacklist_in_tcp":
+			command => "New-NetFirewallRule -DisplayName \"${port}_blacklist_in_tcp\" -Direction Inbound -LocalPort ${port} -Protocol TCP -Action Block -Enabled true",
+			provider => powershell,
+			returns => 0,
+			onlyif => "if(Get-NetFirewallRule -DisplayName \"${port}_blacklist_in_tcp\") {\$LASTEXITCODE = 1} else {return 0}",
 		}
 	}
 	$win2019_hardening::blacklist_in.each |$port| {
@@ -99,6 +100,7 @@ class win2019_hardening::config {
 			command => "New-NetFirewallRule -DisplayName \"${port}_blacklist_in_udp\" -Direction Inbound -LocalPort ${port} -Protocol UDP -Action Block -Enabled true",
 			provider => powershell,
 			returns => 0,
+			onlyif => "if(Get-NetFirewallRule -DisplayName \"${port}_blacklist_in_udp\") {\$LASTEXITCODE = 1} else {return 0}",
 		}
 	}
 	$win2019_hardening::blacklist_out.each |$port| {
@@ -106,6 +108,7 @@ class win2019_hardening::config {
 			command => "New-NetFirewallRule -DisplayName \"${port}_blacklist_out_tcp\" -Direction Outbound -LocalPort ${port} -Protocol TCP -Action Block -Enabled true",
 			provider => powershell,
 			returns => 0,
+			onlyif => "if(Get-NetFirewallRule -DisplayName \"${port}_blacklist_out_tcp\") {\$LASTEXITCODE = 1} else {return 0}",
 		}
 	}
 	$win2019_hardening::blacklist_out.each |$port| {
@@ -113,6 +116,7 @@ class win2019_hardening::config {
 			command => "New-NetFirewallRule -DisplayName \"${port}_blacklist_out_udp\" -Direction Outbound -LocalPort ${port} -Protocol UDP -Action Block -Enabled true",
 			provider => powershell,
 			returns => 0,
+			onlyif => "if(Get-NetFirewallRule -DisplayName \"${port}_blacklist_out_udp\") {\$LASTEXITCODE = 1} else {return 0}",
 		}
 	}
 	#Whitelisting porsts:
@@ -121,6 +125,7 @@ class win2019_hardening::config {
 			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\" -Direction Inbound -LocalPort ${port} -Protocol TCP -Action Allow -Enabled true",
 			provider => powershell,
 			returns => 0,
+			onlyif => "if(Get-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\") {\$LASTEXITCODE = 1} else {return 0}",
 		}
 	}
 	$win2019_hardening::whitelist_in.each |$port| {
@@ -128,20 +133,23 @@ class win2019_hardening::config {
 			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\" -Direction Inbound -LocalPort ${port} -Protocol UDP -Action Allow -Enabled true",
 			provider => powershell,
 			returns => 0,
+			onlyif => "if(Get-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\") {\$LASTEXITCODE = 1} else {return 0}",
 		}
 	}
 	$win2019_hardening::whitelist_out.each |$port| {
 		exec { "${port}_whitelist_out_tcp":
-			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\" -Direction Outbound -LocalPort ${port} -Protocol TCP -Action Allow -Enabled true",
+			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_out_tcp\" -Direction Outbound -LocalPort ${port} -Protocol TCP -Action Allow -Enabled true",
 			provider => powershell,
 			returns => 0,
+			onlyif => "if(Get-NetFirewallRule -DisplayName \"${port}_whitelist_out_tcp\") {\$LASTEXITCODE = 1} else {return 0}",
 		}
 	}
 	$win2019_hardening::whitelist_out.each |$port| {
 		exec { "${port}_whitelist_out_udp":
-			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_in_tcp\" -Direction Outbound -LocalPort ${port} -Protocol UDP -Action Allow -Enabled true",
+			command => "New-NetFirewallRule -DisplayName \"${port}_whitelist_out_udp\" -Direction Outbound -LocalPort ${port} -Protocol UDP -Action Allow -Enabled true",
 			provider => powershell,
 			returns => 0,
+			onlyif => "if(Get-NetFirewallRule -DisplayName \"${port}_whitelist_out_udp\") {\$LASTEXITCODE = 1} else {return 0}",
 		}
 	}
 	#Setting auditing policy to Microsoft's "Stronger Recommendation"
