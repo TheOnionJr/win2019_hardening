@@ -74,11 +74,11 @@ class win2019_hardening::config {
 		}
 	}
 	#Denying outgoing NTLM traffic to remote servers. To avoid hash dumping.
-	registry_key { 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0\RestrictSendingNTLMTraffic' :
+	registry_value { 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0\RestrictSendingNTLMTraffic' :
 		ensure => present,
 		type   => dword,
 		data   => 2,
-		notify => Reboot['after_run'],\Control\Lsa\MSV1_0\RestrictSendingNTLMTraffic'],
+		notify => Reboot['after_run'],
 	}
 
 	#Blacklisting ports:

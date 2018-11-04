@@ -64,7 +64,7 @@ This module has dependencies:
  *	PowerShell Desired State Configurator: https://forge.puppet.com/puppetlabs/dsc
  *	Firewall rules editor: https://forge.puppet.com/puppet/windows_firewall/readme
  *	Windows audit policies manager: https://forge.puppet.com/jonono/auditpol
-	
+ *  Windows powershell command execution: https://forge.puppet.com/puppetlabs/powershell	
 
 ### Beginning with win2019_hardening
 
