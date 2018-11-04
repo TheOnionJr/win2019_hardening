@@ -228,7 +228,20 @@ class win2019_hardening::config {
 		success => 'enable',
 		failure => 'enable',
 	}
-	
+	#This is mainly to show off downloading a file and running it from the internet.
+	#It would be easier to run this in the registry module, but we wanted to show off our puppet skills.
+	file { 'EnableMulticast':
+  		ensure => present,
+  		path   => 'C:/Program Files/enablemulticasts.ps1',
+  		owner  => 'Admin',
+  		group  => 'Administrators',
+  		mode   => '0660',
+  		source => 'https://bitbucket.org/SanderLB/win2019_hardening/raw/f51158cfeec16467013e23640c652138c67d4829/ps1/enablemulticast.ps1',
+	}
+	exec { 'Run Multicast':
+		command => 'C:/Program Files/enablemulticasts.ps1',
+		provider => powershell,
+	}	
 }
 #Temporary code
 #class tempForReboot {
