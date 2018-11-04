@@ -1,0 +1,9 @@
+---
+fixtures:
+  forge_modules:
+    powershell: "puppetlabs/powershell"
+    registry: "puppetlabs/registry"
+    reboot: "puppetlabs/reboot"
+    auditpol: "jonono/auditpol"
+    stdlib:   "puppetlabs/stdlib"
+    archive:  "puppet/archive"
