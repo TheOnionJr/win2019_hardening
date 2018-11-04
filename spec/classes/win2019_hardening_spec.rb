@@ -6,6 +6,9 @@ describe 'win2019_hardening' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile }
+      it { is_expected.to contain_class('win2019_hardening::install').that_comes_before('Class[win2019_hardening::config]')}
+      it { is_expected.to contain_class('win2019_hardening::config')}
+      it { is_expected.to have_class_count(3)}
     end
   end
 end
