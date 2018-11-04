@@ -60,7 +60,7 @@ This module has dependencies:
 
  *	Registry editor for windows: https://forge.puppet.com/puppetlabs/registry 
  *	Tool for rebooting the machine: https://forge.puppet.com/puppetlabs/reboot
- *	Security policy editor for windows: https://forge.puppet.com/ayohrling/local_security_policy 
+ *	~~Security policy editor for windows: https://forge.puppet.com/ayohrling/local_security_policy~~ 
  *	PowerShell Desired State Configurator: https://forge.puppet.com/puppetlabs/dsc
  *	Firewall rules editor: https://forge.puppet.com/puppet/windows_firewall/readme
  *	Windows audit policies manager: https://forge.puppet.com/jonono/auditpol
